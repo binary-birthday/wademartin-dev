@@ -7,6 +7,8 @@ Status: draft. Items marked _(open)_ are not decided yet.
 
 Domain: `wademartin.dev`.
 
+Stack: Astro with TypeScript, using pnpm. Hosted on Netlify.
+
 ## 1. Purpose
 
 A public notebook where I try out ideas in DevOps, developer experience,
@@ -119,4 +121,4 @@ Initial list: `devops`, `dx`, `webdev`, `ai`, `agents`, `spec-driven`.
 
 ## 10. Open questions
 
-- Stack and hosting.
+None right now.
