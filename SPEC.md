@@ -39,6 +39,9 @@ Developers.
 The site has one kind of content: the note. Short and long notes are the
 same thing at different lengths.
 
+Each note is a Markdown file in this repo, with its fields in YAML
+frontmatter. See ADR-0002.
+
 ### 5.1 Fields
 
 | Field | Required | Notes |
@@ -116,5 +119,4 @@ Initial list _(open)_: `platform`, `devops`, `mlops`, `sdd`, `agents`.
 ## 10. Open questions
 
 - Initial tag list (5.3).
-- Content format and where content is stored.
 - Stack and hosting.

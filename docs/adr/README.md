@@ -39,3 +39,4 @@ What becomes easier, what becomes harder, what we'll revisit.
 ## Index
 
 - [0001. Use a minimal, tool-agnostic form of spec-driven development](0001-adopt-minimal-tool-agnostic-sdd.md)
+- [0002. Store notes as Markdown files in this repo](0002-notes-as-markdown-files-in-repo.md)
