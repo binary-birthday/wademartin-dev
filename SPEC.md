@@ -66,7 +66,7 @@ frontmatter. See ADR-0002.
 Tags come from a fixed list kept in one config file. To add a tag, add it
 to the list.
 
-Initial list: `platform`, `devops`, `sdd`, `agents`.
+Initial list: `platform`, `devops`, `full-stack`, `sdd`, `agents`.
 
 ## 6. Pages
 
