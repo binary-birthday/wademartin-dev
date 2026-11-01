@@ -66,7 +66,7 @@ frontmatter. See ADR-0002.
 Tags come from a fixed list kept in one config file. To add a tag, add it
 to the list.
 
-Initial list _(open)_: `platform`, `devops`, `mlops`, `sdd`, `agents`.
+Initial list: `platform`, `devops`, `mlops`, `sdd`, `agents`.
 
 ## 6. Pages
 
@@ -118,5 +118,4 @@ Initial list _(open)_: `platform`, `devops`, `mlops`, `sdd`, `agents`.
 
 ## 10. Open questions
 
-- Initial tag list (5.3).
 - Stack and hosting.
