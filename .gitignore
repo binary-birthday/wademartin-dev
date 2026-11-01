@@ -147,3 +147,12 @@ vite.config.ts.timestamp-*
 
 # Turbo Repo
 .turbo
+
+# Tool-specific agent files (local shims only; see docs/adr/0001)
+CLAUDE.md
+CLAUDE.local.md
+.claude/
+.cursor/
+.cursorrules
+.windsurfrules
+GEMINI.md
