@@ -1,7 +1,7 @@
 # wademartin-dev
 
-A public notebook of ideas and experiments in platform engineering, DevOps
-and agentic development.
+A public notebook of ideas and experiments in DevOps, developer experience,
+web development, AI apps, agents and spec-driven development.
 
 - What the site should be: [`SPEC.md`](SPEC.md)
 - How to make changes: [`CONTRIBUTING.md`](CONTRIBUTING.md)
