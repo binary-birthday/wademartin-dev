@@ -5,7 +5,7 @@ the site does also updates this file.
 
 Status: draft. Items marked _(open)_ are not decided yet.
 
-Domain: `wademartin.dev` (registration not yet confirmed).
+Domain: `wademartin.dev`.
 
 ## 1. Purpose
 
