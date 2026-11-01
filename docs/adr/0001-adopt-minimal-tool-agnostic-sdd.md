@@ -6,7 +6,7 @@
 ## Context
 
 This repo is a portfolio: a small, single-maintainer static site whose job is
-to publish case studies. Experiments with SDD, platform engineering and DevOps
+to publish notes on ideas and experiments. Experiments with SDD, platform engineering and DevOps
 approaches will live in separate repos.
 
 We want spec-driven development here, but only as much as the scale justifies.

@@ -27,3 +27,4 @@ What becomes easier, what becomes harder, what we'll revisit.
 ## Index
 
 - [0001. Adopt minimal, tool-agnostic SDD](0001-adopt-minimal-tool-agnostic-sdd.md)
+- [0002. Lab notebook over garden or repo-first](0002-lab-notebook-over-garden-or-repo-first.md)

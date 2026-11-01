@@ -7,64 +7,107 @@
 
 ## 1. Purpose
 
-A portfolio for platform engineering, DevOps, MLOps and agentic,
-spec-driven development work.
+A public lab notebook for exploring and documenting ideas in platform
+engineering, DevOps, MLOps and agentic development.
 
-This repo is the **publishing layer**. Experiments live in their own repos;
-this site presents them as case studies and links to the evidence.
+Experiments live in their own repos. Notes here summarise and link to them;
+they never duplicate a repo's docs. See ADR-0002.
 
-## 2. Audience _(open)_
+## 2. Audience
 
-Primary reader: _(open: hiring managers / clients / peers)_.
+Developers, primarily teammates who arrive through a shared link.
+Hiring managers are incidental, not a design target.
 
-After 60 seconds a visitor should understand: _(open: one-line positioning)_.
+## 3. Success
 
-## 3. Pages and acceptance criteria
+- Writing and publishing a note is low effort.
+- A shared link is all a reader needs to understand a note.
 
-### 3.1 Home
-- States who I am and what I do in one or two sentences.
-- Links to featured case studies and contact.
+## 4. Constraints
 
-### 3.2 Case studies index
-- Lists every published case study with title, one-line summary and tags.
+- Very little maintenance time. Nothing on the site may need regular upkeep
+  to stay correct.
 
-### 3.3 Case study page
-- Follows the case-study format in §4.
-- Links to the source repo and its key specs/ADRs.
+## 5. Content model
 
-### 3.4 About
-- Background, focus areas, current interests.
+The site has one content type: the **note**. Short and long writing differ
+only in length.
 
-### 3.5 Contact
-- At least one working contact method. No contact form (see §6).
+### 5.1 Fields
 
-## 4. Case-study format
+| Field | Required | Notes |
+|-------|----------|-------|
+| `title` | yes | |
+| `date` | yes | First published. |
+| `summary` | yes | One sentence. Used for link previews and lists. |
+| `status` | yes | `exploring`, `settled` or `outdated` (see 5.2). |
+| `tags` | yes | One or more, from the fixed list (see 5.3). |
+| `updated` | no | Set when a note changes in substance. |
+| `superseded_by` | no | Slug of the newer note. Used with `outdated`. |
+| `links` | no | Repos and other evidence. |
 
-Every case study has these sections, in this order:
+### 5.2 Status
 
-1. **Context:** what I was trying to learn or solve.
-2. **Approach:** the method or pattern being tried.
-3. **Setup:** repo link, scale, constraints.
-4. **What happened:** what worked, what hurt, any metrics.
-5. **Trade-offs and verdict:** when I'd use it again, and when I wouldn't.
-6. **Links:** repo, key specs and ADRs.
+- `exploring`: rough thinking; may change.
+- `settled`: I'd stand behind this.
+- `outdated`: kept for history; points to its replacement if one exists.
 
-## 5. Quality bar
+### 5.3 Tags
 
-- Lighthouse ≥ 95 in every category on key pages.
+A fixed list kept in one config file. Adding a tag is a deliberate change.
+
+Initial list _(open)_: `platform`, `devops`, `mlops`, `sdd`, `agents`.
+
+## 6. Pages
+
+| Page | Contents |
+|------|----------|
+| Home | One-line description and the latest notes. |
+| Note | The note, with status and dates prominent. |
+| Tag | All notes with that tag. |
+| About | Who I am, in a few lines. |
+| Feed | RSS of all notes. |
+
+## 7. URLs
+
+- Notes live at `/notes/<slug>`. No date in the URL.
+- A published URL never breaks. Renamed notes redirect from the old slug.
+
+## 8. Acceptance criteria
+
+### Content
+- The build fails if a note is missing a required field.
+- The build fails if a note uses a tag not in the fixed list.
+- The build fails if `status` is not one of the allowed values.
+- The build fails if `superseded_by` points to a note that doesn't exist.
+
+### Display
+- Each note shows its status, date and, if set, updated date.
+- `outdated` notes show a clear banner, linking `superseded_by` if set.
+- Each note page has a title and description for link previews, taken from
+  `title` and `summary`.
+- Home lists notes newest first.
+- Each tag has a page listing its notes newest first.
+- The feed includes every note with title, summary, date and link.
+
+### Quality
+- Lighthouse ≥ 95 in every category on Home and a typical note.
 - Accessible to WCAG 2.2 AA.
 - No broken internal or external links.
 - Every merge to `main` deploys automatically.
 - Every PR gets a preview build.
 
-## 6. Non-goals
+## 9. Non-goals
 
-- No CMS, backend, auth, comments or contact forms.
-- No tracking cookies.
-- Not a place to run platform/DevOps/SDD experiments; those get their own repos.
+- Other content types: case studies, series, a "now" page, a projects index.
+- Search, comments, featured or curated sections.
+- A separate drafts area (`exploring` covers it).
+- CMS, backend, auth or contact forms.
+- Tracking cookies.
+- Running experiments in this repo; they get their own repos.
 
-## 7. Open questions
+## 10. Open questions
 
-- Audience and positioning (§2).
+- Initial tag list (5.3).
 - Stack and hosting: to be decided by ADR.
 - Domain.

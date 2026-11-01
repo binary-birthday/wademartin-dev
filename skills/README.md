@@ -18,11 +18,11 @@ load it directly:
 
 ```markdown
 ---
-name: write-case-study
-description: Draft a case study in the format defined in SPEC.md §4.
+name: write-note
+description: Draft a note with the fields defined in SPEC.md §5.
 ---
 
-# Write a case study
+# Write a note
 
 Steps...
 ```
@@ -32,5 +32,5 @@ local, git-ignored symlink.
 
 ## Candidates
 
-- `write-case-study`: once the first two or three exist.
+- `write-experiment-note`: only if a common structure emerges from practice.
 - `add-adr`: if ADRs become frequent.
