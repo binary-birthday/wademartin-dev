@@ -7,7 +7,8 @@ Status: draft. Items marked _(open)_ are not decided yet.
 
 Domain: `wademartin.dev`.
 
-Stack: Astro with TypeScript, using pnpm. Hosted on Netlify.
+Stack: Astro with TypeScript, using pnpm. Built and checked in GitHub
+Actions, hosted on Netlify.
 
 ## 1. Purpose
 
@@ -83,7 +84,9 @@ Initial list: `devops`, `dx`, `webdev`, `ai`, `agents`, `spec-driven`.
 
 ## 7. URLs
 
-- Notes live at `/notes/<slug>`. No date in the URL.
+- Notes live at `/notes/<slug>/`. No date in the URL.
+- Tag pages live at `/tags/<tag>/`.
+- The feed lives at `/rss.xml`.
 - A published URL never breaks. Renamed notes redirect from the old slug.
 
 ## 8. Acceptance criteria

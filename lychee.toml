@@ -1,0 +1,13 @@
+# Link checker config, shared by the internal check (every PR, offline) and
+# the external check (weekly). root_dir is passed on the command line because
+# it must be an absolute path.
+
+# Treat /notes/foo/ as /notes/foo/index.html.
+index_files = ["index.html"]
+
+# Links to the site itself are covered by the internal check.
+exclude = ['^https://wademartin\.dev']
+
+max_retries = 2
+accept = ["200..=299", "429"]
+no_progress = true

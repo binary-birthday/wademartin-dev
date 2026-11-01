@@ -1,0 +1,15 @@
+---
+import Base from "../layouts/Base.astro";
+import NoteList from "../components/NoteList.astro";
+import { getNotes } from "../lib/notes";
+
+const description =
+  "A public notebook of ideas and experiments in DevOps, developer experience, web development, AI apps, agents and spec-driven development.";
+const notes = await getNotes();
+---
+
+<Base title="wademartin.dev" description={description}>
+  <p>{description}</p>
+  <h1>Notes</h1>
+  <NoteList notes={notes} />
+</Base>

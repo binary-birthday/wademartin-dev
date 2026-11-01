@@ -1,0 +1,26 @@
+---
+import Base from "../../layouts/Base.astro";
+import NoteList from "../../components/NoteList.astro";
+import { getNotes, type Note } from "../../lib/notes";
+import { TAGS } from "../../tags";
+
+export async function getStaticPaths() {
+  const notes = await getNotes();
+  return TAGS.map((tag) => ({
+    params: { tag },
+    props: { notes: notes.filter((note) => note.data.tags.includes(tag)) },
+  }));
+}
+
+interface Props {
+  notes: Note[];
+}
+
+const { tag } = Astro.params;
+const { notes } = Astro.props;
+---
+
+<Base title={`Tag: ${tag}`} description={`Notes tagged ${tag}.`}>
+  <h1>Tag: {tag}</h1>
+  <NoteList notes={notes} />
+</Base>
