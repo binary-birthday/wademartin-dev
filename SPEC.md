@@ -9,8 +9,8 @@ Domain: `wademartin.dev`.
 
 ## 1. Purpose
 
-A public notebook where I try out ideas in platform engineering, DevOps,
-MLOps and agentic development, and write up what I find.
+A public notebook where I try out ideas in platform engineering, DevOps
+and agentic development, and write up what I find.
 
 Experiments live in their own repos. A note here sums up an experiment and
 links to it. It doesn't copy the repo's docs.
@@ -66,7 +66,7 @@ frontmatter. See ADR-0002.
 Tags come from a fixed list kept in one config file. To add a tag, add it
 to the list.
 
-Initial list: `platform`, `devops`, `mlops`, `sdd`, `agents`.
+Initial list: `platform`, `devops`, `sdd`, `agents`.
 
 ## 6. Pages
 
