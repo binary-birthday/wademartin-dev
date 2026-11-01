@@ -1,9 +1,11 @@
 # Agents
 
-Follow [`CONTRIBUTING.md`](CONTRIBUTING.md). It applies to humans and agents equally.
+Follow [`CONTRIBUTING.md`](CONTRIBUTING.md). The same rules apply to people
+and agents.
 
-- `SPEC.md` is the source of truth. Read it before any change.
-- Reusable procedures are in [`skills/`](skills/).
-- Verification commands: see "Verifying locally" in `CONTRIBUTING.md`.
+- Read `SPEC.md` before any change. It describes what the site should be.
+- Step-by-step guides for repeated tasks are in [`skills/`](skills/).
+- For how to check your work, see "Checking locally" in `CONTRIBUTING.md`.
 
-This file intentionally contains no rules of its own.
+This file has no rules of its own, so it can't disagree with
+`CONTRIBUTING.md`.

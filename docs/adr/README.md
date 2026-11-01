@@ -1,22 +1,22 @@
 # Architecture Decision Records
 
-Record **architecturally significant** decisions only: ones that shape the
-system's structure, quality attributes, dependencies, interfaces, or how it is
-built and deployed. Expect few.
+An ADR records a big technical decision: one that affects how the system is
+structured, how it performs, what it depends on, its interfaces, or how it is
+built and deployed. There should be very few.
 
-Write one when most of these hold:
+Write one when most of these are true:
 
-1. **Hard to reverse.** Changing course later means real effort or migration.
-2. **Real alternatives.** It was a trade-off, not an obvious default.
-3. **Future "why?".** Someone will later wonder why it was done this way.
-4. **Technical.** Product decisions belong in `SPEC.md`; conventions belong
-   in config and tooling.
+1. It's hard to undo. Changing it later would take real work.
+2. There were real options to choose between.
+3. Someone will later ask why it was done this way.
+4. It's technical. Product decisions go in `SPEC.md`. Conventions go in
+   config and tooling.
 
-If a decision is cheap to undo, don't write an ADR. Note it in the PR.
+If a decision is easy to undo, don't write an ADR. Mention it in the PR.
 
 - Number sequentially: `NNNN-short-title.md`.
-- Once accepted, an ADR is not edited. To change a decision, write a new ADR
-  that supersedes it and update the old one's status.
+- Don't edit an ADR once it's accepted. To change the decision, write a new
+  ADR and mark the old one as superseded.
 
 ## Template
 
@@ -27,7 +27,7 @@ If a decision is cheap to undo, don't write an ADR. Note it in the PR.
 **Date:** YYYY-MM-DD
 
 ## Context
-What forces are at play and why a decision is needed.
+What the situation is and why a decision is needed.
 
 ## Decision
 What we chose.
@@ -38,4 +38,4 @@ What becomes easier, what becomes harder, what we'll revisit.
 
 ## Index
 
-- [0001. Adopt minimal, tool-agnostic SDD](0001-adopt-minimal-tool-agnostic-sdd.md)
+- [0001. Use a minimal, tool-agnostic form of spec-driven development](0001-adopt-minimal-tool-agnostic-sdd.md)

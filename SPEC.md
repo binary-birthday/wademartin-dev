@@ -1,42 +1,42 @@
 # Spec: wademartin.dev
 
-> The single source of truth for what this site should be **right now**.
-> Every change that alters behaviour updates this file in the same PR.
+This file describes what the site should be now. Any PR that changes what
+the site does also updates this file.
 
-**Status:** Draft · items marked _(open)_ are not yet decided.
+Status: draft. Items marked _(open)_ are not decided yet.
 
 ## 1. Purpose
 
-A public lab notebook for exploring and documenting ideas in platform
-engineering, DevOps, MLOps and agentic development.
+A public notebook where I try out ideas in platform engineering, DevOps,
+MLOps and agentic development, and write up what I find.
 
-Experiments live in their own repos. Notes here summarise and link to them;
-they never duplicate a repo's docs.
+Experiments live in their own repos. A note here sums up an experiment and
+links to it. It doesn't copy the repo's docs.
 
-**Why a notebook:** dated notes with a status are the cheapest shape to keep
-honest. A topic-based knowledge base needs regular upkeep, and a repo-only
-index loses the reasoning. A note can still be updated or marked `outdated`,
-but never has to be.
+Why a notebook: dated notes with a status stay accurate without upkeep. A
+set of topic pages would need regular updates, and a plain list of repos
+would lose the reasoning. A note can be updated or marked `outdated`, but it
+never has to be.
 
 ## 2. Audience
 
-Developers, primarily teammates who arrive through a shared link.
-Hiring managers are incidental, not a design target.
+Developers, mostly teammates who I've sent a link to. Hiring managers may
+read it, but the site isn't designed for them.
 
 ## 3. Success
 
-- Writing and publishing a note is low effort.
-- A shared link is all a reader needs to understand a note.
+- Writing and publishing a note takes little effort.
+- Someone who only has the link can understand the note.
 
 ## 4. Constraints
 
-- Very little maintenance time. Nothing on the site may need regular upkeep
-  to stay correct.
+- I have very little time to maintain it. Nothing on the site should need
+  regular updates to stay correct.
 
 ## 5. Content model
 
-The site has one content type: the **note**. Short and long writing differ
-only in length.
+The site has one kind of content: the note. Short and long notes are the
+same thing at different lengths.
 
 ### 5.1 Fields
 
@@ -47,7 +47,7 @@ only in length.
 | `summary` | yes | One sentence. Used for link previews and lists. |
 | `status` | yes | `exploring`, `settled` or `outdated` (see 5.2). |
 | `tags` | yes | One or more, from the fixed list (see 5.3). |
-| `updated` | no | Set when a note changes in substance. |
+| `updated` | no | Set when a note changes in a meaningful way. |
 | `superseded_by` | no | Slug of the newer note. Used with `outdated`. |
 | `links` | no | Repos and other evidence. |
 
@@ -59,7 +59,8 @@ only in length.
 
 ### 5.3 Tags
 
-A fixed list kept in one config file. Adding a tag is a deliberate change.
+Tags come from a fixed list kept in one config file. To add a tag, add it
+to the list.
 
 Initial list _(open)_: `platform`, `devops`, `mlops`, `sdd`, `agents`.
 
@@ -68,7 +69,7 @@ Initial list _(open)_: `platform`, `devops`, `mlops`, `sdd`, `agents`.
 | Page | Contents |
 |------|----------|
 | Home | One-line description and the latest notes. |
-| Note | The note, with status and dates prominent. |
+| Note | The note. Status and dates are easy to see. |
 | Tag | All notes with that tag. |
 | About | Who I am, in a few lines. |
 | Feed | RSS of all notes. |
@@ -88,7 +89,7 @@ Initial list _(open)_: `platform`, `devops`, `mlops`, `sdd`, `agents`.
 
 ### Display
 - Each note shows its status, date and, if set, updated date.
-- `outdated` notes show a clear banner, linking `superseded_by` if set.
+- `outdated` notes show a banner, with a link to `superseded_by` if set.
 - Each note page has a title and description for link previews, taken from
   `title` and `summary`.
 - Home lists notes newest first.

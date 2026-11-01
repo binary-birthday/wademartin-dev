@@ -1,40 +1,40 @@
-# 0001. Adopt minimal, tool-agnostic SDD
+# 0001. Use a minimal, tool-agnostic form of spec-driven development
 
 **Status:** Accepted
 **Date:** 2026-11-01
 
 ## Context
 
-This repo is a portfolio: a small, single-maintainer static site whose job is
-to publish notes on ideas and experiments. Experiments with SDD, platform engineering and DevOps
-approaches will live in separate repos.
+This repo is a small static site with one maintainer. It publishes notes on
+ideas and experiments. The experiments themselves live in other repos.
 
-We want spec-driven development here, but only as much as the scale justifies.
-Considered:
+I want to work spec-first here, but only as much as a project this size needs.
+Options considered:
 
-- **Long-lived specs only.** Specs drift, and every change becomes a rewrite.
-- **Change-scoped specs only.** No record of the current intended state.
-- **Central standards repo / layered standards.** Solves coordination problems
-  a one-person, one-repo project doesn't have.
+- Long-lived specs only. These drift, and every change means rewriting them.
+- Short specs per change only. Nothing records what the site should be now.
+- A central standards repo with layers of shared rules. This solves problems
+  of coordinating many people and repos, which this project doesn't have.
 
-We also want the process to work with any AI tool, or none.
+The process also has to work with any AI tool, or none.
 
 ## Decision
 
-- One living spec, `SPEC.md`, describes the site as it should be now.
-- The PR description, via a template, is the change-scoped spec.
-- ADRs only for decisions between real alternatives.
-- One working agreement, `CONTRIBUTING.md`, for humans and agents alike.
-  `AGENTS.md` only points to it.
-- No tool-specific files are committed. Local shims (e.g. `CLAUDE.md`,
-  `.cursor/`) point to `AGENTS.md` and are git-ignored.
-- Reusable procedures go in `skills/` as plain Markdown, added only when a task
-  has been repeated enough to be worth writing down.
-- Enforce in CI where possible rather than in prose.
+- One spec, `SPEC.md`, describes what the site should be now.
+- Each PR description, using the template, is the spec for that change.
+- ADRs only for big technical decisions.
+- One set of rules, `CONTRIBUTING.md`, for people and agents. `AGENTS.md`
+  only points to it.
+- No tool-specific files are committed. Files like `CLAUDE.md` or `.cursor/`
+  can exist locally to point at `AGENTS.md`, and are git-ignored.
+- Step-by-step guides go in `skills/` as plain Markdown, and only once a task
+  has been done enough times to be worth writing down.
+- Check things in CI where possible instead of writing rules about them.
 
 ## Consequences
 
-- Little to maintain; one place to check what the site should be.
-- Change history lives in PRs, so it is tied to GitHub as a platform.
-- Revisit if: a second contributor joins, standards are copied into a second
-  repo (extract them), or PR-based change specs prove too thin.
+- There's little to maintain and one place to look.
+- The history of changes lives in PRs, which ties it to GitHub.
+- Revisit this if a second person starts contributing, if these rules get
+  copied into another repo (move them to a shared place), or if PR
+  descriptions turn out to be too thin as change specs.

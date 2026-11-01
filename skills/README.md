@@ -1,25 +1,26 @@
 # Skills
 
-Reusable, tool-agnostic procedures for recurring tasks, usable by humans and
-agents. None yet: add one only when a task has been done a few times and the
-steps have settled.
+A skill is a step-by-step guide for a task that comes up often. People and
+agents can both use them. There are none yet. Add one only after doing a
+task a few times, once the steps have stopped changing.
 
 ## Rules
 
-- Skills describe **how** to do a task. Rules live in `CONTRIBUTING.md`;
-  a skill never adds or overrides them.
-- Plain Markdown, no tool-specific features required.
-- One folder per skill: `skills/<name>/SKILL.md`, plus any supporting files.
+- A skill explains how to do a task. The rules live in `CONTRIBUTING.md`. A
+  skill can't add to them or change them.
+- Write skills in plain Markdown. They must not need any particular tool.
+- Each skill gets its own folder: `skills/<name>/SKILL.md`, plus any files it
+  needs.
 
 ## Format
 
-`SKILL.md` follows the open Agent Skills layout, so tools that support it can
-load it directly:
+`SKILL.md` uses the open Agent Skills format, so tools that support it can
+read it directly:
 
 ```markdown
 ---
 name: write-note
-description: Draft a note with the fields defined in SPEC.md §5.
+description: Draft a note with the fields listed in SPEC.md section 5.
 ---
 
 # Write a note
@@ -27,10 +28,10 @@ description: Draft a note with the fields defined in SPEC.md §5.
 Steps...
 ```
 
-Tools that discover skills in their own location can be pointed here with a
-local, git-ignored symlink.
+If a tool looks for skills somewhere else, point it here with a local symlink
+and git-ignore the link.
 
-## Candidates
+## Possible first skills
 
-- `write-experiment-note`: only if a common structure emerges from practice.
-- `add-adr`: if ADRs become frequent.
+- `write-experiment-note`, if a common structure shows up in practice.
+- `add-adr`, if ADRs become frequent.
