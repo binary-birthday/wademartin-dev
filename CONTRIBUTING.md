@@ -24,7 +24,7 @@ AI agents alike. There are no agent-only rules.
 - Read `SPEC.md` before changing anything.
 - Don't build what the spec doesn't describe. Propose a spec change first.
 - Update `SPEC.md` in the same PR as any behaviour change.
-- Write an ADR when choosing between real alternatives (see `docs/adr/`).
+- Write an ADR only for architecturally significant decisions (see `docs/adr/`).
 - Keep changes small and scoped to one intent.
 
 ## Verifying locally

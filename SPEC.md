@@ -11,7 +11,12 @@ A public lab notebook for exploring and documenting ideas in platform
 engineering, DevOps, MLOps and agentic development.
 
 Experiments live in their own repos. Notes here summarise and link to them;
-they never duplicate a repo's docs. See ADR-0002.
+they never duplicate a repo's docs.
+
+**Why a notebook:** dated notes with a status are the cheapest shape to keep
+honest. A topic-based knowledge base needs regular upkeep, and a repo-only
+index loses the reasoning. A note can still be updated or marked `outdated`,
+but never has to be.
 
 ## 2. Audience
 
@@ -109,5 +114,6 @@ Initial list _(open)_: `platform`, `devops`, `mlops`, `sdd`, `agents`.
 ## 10. Open questions
 
 - Initial tag list (5.3).
-- Stack and hosting: to be decided by ADR.
+- Content format and where content is stored.
+- Stack and hosting.
 - Domain.

@@ -1,6 +1,18 @@
 # Architecture Decision Records
 
-Write an ADR only when choosing between real alternatives. Expect few.
+Record **architecturally significant** decisions only: ones that shape the
+system's structure, quality attributes, dependencies, interfaces, or how it is
+built and deployed. Expect few.
+
+Write one when most of these hold:
+
+1. **Hard to reverse.** Changing course later means real effort or migration.
+2. **Real alternatives.** It was a trade-off, not an obvious default.
+3. **Future "why?".** Someone will later wonder why it was done this way.
+4. **Technical.** Product decisions belong in `SPEC.md`; conventions belong
+   in config and tooling.
+
+If a decision is cheap to undo, don't write an ADR. Note it in the PR.
 
 - Number sequentially: `NNNN-short-title.md`.
 - Once accepted, an ADR is not edited. To change a decision, write a new ADR
@@ -27,4 +39,3 @@ What becomes easier, what becomes harder, what we'll revisit.
 ## Index
 
 - [0001. Adopt minimal, tool-agnostic SDD](0001-adopt-minimal-tool-agnostic-sdd.md)
-- [0002. Lab notebook over garden or repo-first](0002-lab-notebook-over-garden-or-repo-first.md)
