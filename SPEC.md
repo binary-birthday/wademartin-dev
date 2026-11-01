@@ -5,6 +5,8 @@ the site does also updates this file.
 
 Status: draft. Items marked _(open)_ are not decided yet.
 
+Domain: `wademartin.dev` (registration not yet confirmed).
+
 ## 1. Purpose
 
 A public notebook where I try out ideas in platform engineering, DevOps,
@@ -116,4 +118,3 @@ Initial list _(open)_: `platform`, `devops`, `mlops`, `sdd`, `agents`.
 - Initial tag list (5.3).
 - Content format and where content is stored.
 - Stack and hosting.
-- Domain.
