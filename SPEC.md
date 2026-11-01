@@ -20,8 +20,7 @@ never has to be.
 
 ## 2. Audience
 
-Developers, mostly teammates who I've sent a link to. Hiring managers may
-read it, but the site isn't designed for them.
+Developers.
 
 ## 3. Success
 
