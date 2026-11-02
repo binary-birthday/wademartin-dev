@@ -74,7 +74,7 @@ jobs:
         name: Deploy preview to Netlify
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_SITE_ID: ${{ vars.NETLIFY_SITE_ID }}
         run: |
           npx --yes "netlify-cli@${NETLIFY_CLI_VERSION}" deploy \
             --dir dist --no-build --json \
@@ -103,7 +103,7 @@ jobs:
       - name: Deploy to Netlify production
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_SITE_ID: ${{ vars.NETLIFY_SITE_ID }}
         run: |
           npx --yes "netlify-cli@${NETLIFY_CLI_VERSION}" deploy \
             --dir dist --no-build --prod \
