@@ -53,7 +53,46 @@ If you wouldn't say it out loud to a colleague, rewrite it.
 
 ## Checking locally
 
-To be written once the stack is chosen.
+You need:
+
+- Node, at the version in `.nvmrc`.
+- pnpm, at the version in the `packageManager` field of `package.json`.
+  `corepack enable` sets this up, or install it directly.
+- [lychee](https://lychee.cli.rs) for the link check, for example
+  `brew install lychee` or `cargo install lychee`.
+
+Commands:
+
+| Command | What it does |
+|---------|--------------|
+| `pnpm install` | Install dependencies. |
+| `pnpm dev` | Run the site locally. |
+| `pnpm verify` | Run everything CI runs: type check, tests, build and internal link check. |
+
+Run `pnpm verify` before opening a PR.
+
+## Adding or changing notes
+
+- Notes live in `src/content/notes/`. The file name is the note's URL:
+  `my-note.md` becomes `/notes/my-note/`.
+- Tags must come from `src/tags.ts`. To add a tag, add it there.
+- If you rename a note, add a redirect from the old URL in
+  `public/_redirects`.
+
+## How the site is built and deployed
+
+GitHub Actions checks and builds the site once, then deploys that exact build
+to Netlify: a preview for each PR, production for each merge to `main`.
+Netlify doesn't build anything.
+
+To keep builds repeatable:
+
+- Pin versions: Node in `.nvmrc`, pnpm in `package.json`, dependencies in
+  the lockfile.
+- Set the site URL only in `astro.config.mjs`. Don't read host environment
+  variables in the build.
+- Don't use Netlify build plugins.
+- Don't fetch remote data at build time.
 
 ## Skills
 

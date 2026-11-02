@@ -1,0 +1,3 @@
+# Netlify redirects. When a note is renamed, add a line here so the old URL
+# keeps working (SPEC.md section 7):
+# /notes/old-slug/  /notes/new-slug/  301

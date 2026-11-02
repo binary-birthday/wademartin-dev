@@ -1,0 +1,65 @@
+---
+import { render } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import { formatDate, getNotes, noteUrl, tagUrl, type Note } from "../../lib/notes";
+
+export async function getStaticPaths() {
+  const notes = await getNotes();
+  return notes.map((note) => ({ params: { slug: note.id }, props: { note } }));
+}
+
+interface Props {
+  note: Note;
+}
+
+const { note } = Astro.props;
+const { title, summary, date, updated, status, tags, superseded_by, links } = note.data;
+const { Content } = await render(note);
+---
+
+<Base title={title} description={summary} type="article">
+  <article>
+    <h1>{title}</h1>
+    <p class="meta">
+      Published <time datetime={date.toISOString()}>{formatDate(date)}</time>
+      {updated && (
+        <>
+          {" · "}Updated <time datetime={updated.toISOString()}>{formatDate(updated)}</time>
+        </>
+      )}
+      {" · "}Status: {status}
+    </p>
+    {status === "outdated" && (
+      <p class="banner">
+        This note is outdated.
+        {superseded_by && (
+          <>
+            {" "}See <a href={noteUrl(superseded_by.id)}>the newer note</a>.
+          </>
+        )}
+      </p>
+    )}
+    <Content />
+    {links && links.length > 0 && (
+      <>
+        <h2>Links</h2>
+        <ul>
+          {links.map((link) => (
+            <li>
+              <a href={link}>{link}</a>
+            </li>
+          ))}
+        </ul>
+      </>
+    )}
+    <p class="meta">
+      Tags:{" "}
+      {tags.map((tag, i) => (
+        <>
+          {i > 0 && ", "}
+          <a href={tagUrl(tag)}>{tag}</a>
+        </>
+      ))}
+    </p>
+  </article>
+</Base>
