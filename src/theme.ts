@@ -7,7 +7,8 @@ export const colors = {
   text: "#E6EBF2",
   muted: "#A7B1C0", // text mixed 30% toward navy
   link: "#2DD4BF", // teal: links, "settled"
-  accent: "#FF6FA5", // hot pink: highlights, "exploring"
+  accent: "#F15BB5", // magenta: highlights, "exploring"
+  accentInCode: "#F47CC4", // magenta mixed 20% toward white, so it passes AA on the code background
   onFill: "#13294B", // text on teal or pink fills
 } as const;
 
@@ -16,11 +17,11 @@ export const textPairs: [name: string, fg: string, bg: string][] = [
   ["body text", colors.text, colors.bg],
   ["muted text", colors.muted, colors.bg],
   ["links", colors.link, colors.bg],
-  ["pink text", colors.accent, colors.bg],
+  ["magenta text", colors.accent, colors.bg],
   ["text in code blocks", colors.text, colors.surface],
   ["muted text in code blocks", colors.muted, colors.surface],
   ["teal in code blocks", colors.link, colors.surface],
-  ["pink in code blocks", colors.accent, colors.surface],
+  ["magenta in code blocks", colors.accentInCode, colors.surface],
   ["text on settled badge", colors.onFill, colors.link],
   ["text on exploring badge", colors.onFill, colors.accent],
   ["muted text on outdated badge", colors.muted, colors.surface],
@@ -40,7 +41,7 @@ export const themeCss = `:root {
   --on-fill: ${colors.onFill};
   --astro-code-background: ${colors.surface};
   --astro-code-foreground: ${colors.text};
-  --astro-code-token-keyword: ${colors.accent};
+  --astro-code-token-keyword: ${colors.accentInCode};
   --astro-code-token-string: ${colors.link};
   --astro-code-token-string-expression: ${colors.link};
   --astro-code-token-constant: ${colors.link};

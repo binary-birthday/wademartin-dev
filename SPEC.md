@@ -85,7 +85,7 @@ Initial list: `devops`, `dx`, `webdev`, `ai`, `agents`, `spec-driven`.
 ### Look
 
 - Dark theme only. The site ignores the visitor's light or dark setting.
-- Colours: navy background, teal for links and `settled`, hot pink for
+- Colours: navy background, teal for links and `settled`, magenta for
   highlights and `exploring`. Exact values live in `src/theme.ts`.
 - Fonts: Bricolage Grotesque for headings, Newsreader for body text,
   JetBrains Mono for code and metadata. Font files are served from the site
