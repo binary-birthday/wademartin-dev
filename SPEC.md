@@ -97,7 +97,6 @@ Initial list: `devops`, `dx`, `webdev`, `ai`, `agents`, `spec-driven`.
     colour.
   - On note pages, status, dates, tags and links sit in a margin beside the
     text. On narrow screens they move above it.
-  - Headings inside a note start with a magenta `§`.
   - A code block can show its file name in a magenta tab
     (```` ```ts title="src/schema.ts" ````).
 
