@@ -62,3 +62,8 @@ export function toSearch(query: Query): string {
   const out = params.toString();
   return out ? `?${out}` : "";
 }
+
+// "1 note", "3 notes".
+export function notesLabel(count: number): string {
+  return `${count} ${count === 1 ? "note" : "notes"}`;
+}

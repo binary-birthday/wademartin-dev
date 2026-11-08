@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { countWith, emptyQuery, matches, parseQuery, toSearch, type Filterable } from "../src/lib/filter";
+import { countWith, emptyQuery, matches, notesLabel, parseQuery, toSearch, type Filterable } from "../src/lib/filter";
 
 const notes: Filterable[] = [
   { title: "Build once", summary: "Deploy what you tested.", status: "settled", tags: ["devops", "dx"] },
@@ -59,5 +59,13 @@ describe("URL round trip", () => {
 
   it("gives an empty string for an empty query", () => {
     expect(toSearch(emptyQuery())).toBe("");
+  });
+});
+
+describe("notesLabel", () => {
+  it("uses the singular for one note", () => {
+    expect(notesLabel(0)).toBe("0 notes");
+    expect(notesLabel(1)).toBe("1 note");
+    expect(notesLabel(2)).toBe("2 notes");
   });
 });

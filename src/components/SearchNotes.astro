@@ -30,7 +30,7 @@
 </p>
 
 <script>
-  import { countWith, emptyQuery, matches, parseQuery, toSearch, type Filterable, type Query } from "../lib/filter";
+  import { countWith, emptyQuery, matches, notesLabel, parseQuery, toSearch, type Filterable, type Query } from "../lib/filter";
   import { STATUSES } from "../statuses";
   import { TAGS } from "../tags";
 
@@ -175,8 +175,8 @@
       if (noMatch) noMatch.hidden = shown > 0;
       const filtered = query.statuses.length + query.tags.length > 0 || query.text.trim() !== "";
       countText.textContent = filtered
-        ? `Showing ${shown} of ${entries.length} notes`
-        : `${entries.length} notes, newest first`;
+        ? `Showing ${shown} of ${notesLabel(entries.length)}`
+        : `${notesLabel(entries.length)}, newest first`;
       clear.hidden = !filtered;
       history.replaceState(null, "", location.pathname + toSearch(query) + location.hash);
       if (!panel.hidden) renderPanel();
