@@ -1,0 +1,243 @@
+---
+// The home page search box (SPEC.md 6.1). Without JavaScript it is a link to
+// the Browse page; the script swaps it for the real box.
+---
+
+<div class="search" data-search>
+  <a class="search-fallback" href="/browse/">Browse notes by status or tag</a>
+  <div class="search-box" hidden>
+    <span class="search-icon" aria-hidden="true">⌕</span>
+    <span class="search-chips"></span>
+    <input
+      type="text"
+      id="search-notes"
+      placeholder="Search notes"
+      aria-label="Search notes"
+      autocomplete="off"
+      spellcheck="false"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="search-panel"
+      aria-autocomplete="list"
+    />
+    <kbd aria-hidden="true">/</kbd>
+  </div>
+  <div class="search-panel" id="search-panel" role="listbox" aria-label="Suggestions" hidden></div>
+</div>
+<p class="search-count" hidden>
+  <span data-count></span>
+  <button type="button" data-clear hidden>Clear</button>
+</p>
+
+<script>
+  import { countWith, emptyQuery, matches, parseQuery, toSearch, type Filterable, type Query } from "../lib/filter";
+  import { STATUSES } from "../statuses";
+  import { TAGS } from "../tags";
+
+  type Entry = Filterable & { el: HTMLElement; url: string };
+  type Option =
+    | { type: "facet"; kind: "status" | "tag"; value: string; count: number }
+    | { type: "note"; entry: Entry };
+
+  const root = document.querySelector<HTMLElement>("[data-search]");
+  const entries: Entry[] = [...document.querySelectorAll<HTMLElement>(".log .entry")].map((el) => ({
+    el,
+    url: el.dataset.url ?? "",
+    title: el.dataset.title ?? "",
+    summary: el.dataset.summary ?? "",
+    status: el.dataset.status ?? "",
+    tags: (el.dataset.tags ?? "").split(" ").filter(Boolean),
+  }));
+
+  if (root && entries.length > 0) {
+    const box = root.querySelector<HTMLElement>(".search-box")!;
+    const input = root.querySelector<HTMLInputElement>("input")!;
+    const chips = root.querySelector<HTMLElement>(".search-chips")!;
+    const panel = root.querySelector<HTMLElement>(".search-panel")!;
+    const countLine = document.querySelector<HTMLElement>(".search-count")!;
+    const countText = countLine.querySelector<HTMLElement>("[data-count]")!;
+    const clear = countLine.querySelector<HTMLButtonElement>("[data-clear]")!;
+    const noMatch = document.querySelector<HTMLElement>("[data-no-match]");
+
+    root.querySelector(".search-fallback")?.remove();
+    box.hidden = false;
+    countLine.hidden = false;
+
+    let query: Query = parseQuery(location.search, { statuses: STATUSES, tags: TAGS });
+    input.value = query.text;
+    let options: Option[] = [];
+    let active = 0;
+
+    const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]!);
+
+    function renderChips() {
+      const items = [
+        ...query.statuses.map((value) => ({ kind: "status" as const, value })),
+        ...query.tags.map((value) => ({ kind: "tag" as const, value })),
+      ];
+      chips.innerHTML = items
+        .map(
+          (c) =>
+            `<button type="button" class="chip ${c.kind === "status" ? `chip-${c.value}` : ""}" data-kind="${c.kind}" data-value="${c.value}" aria-label="Remove ${c.value}">${c.value}<span aria-hidden="true">×</span></button>`,
+        )
+        .join("");
+      chips.querySelectorAll<HTMLButtonElement>(".chip").forEach((b) =>
+        b.addEventListener("click", (e) => {
+          e.stopPropagation();
+          remove(b.dataset.kind as "status" | "tag", b.dataset.value!);
+          input.focus();
+        }),
+      );
+    }
+
+    function remove(kind: "status" | "tag", value: string) {
+      if (kind === "status") query.statuses = query.statuses.filter((s) => s !== value);
+      else query.tags = query.tags.filter((t) => t !== value);
+      update();
+    }
+
+    function renderPanel() {
+      const typed = query.text.trim().toLowerCase();
+      const facets = (kind: "status" | "tag", values: readonly string[], picked: string[]) =>
+        values
+          .filter((v) => !picked.includes(v) && (!typed || v.includes(typed)))
+          .map((value) => ({ type: "facet" as const, kind, value, count: countWith(entries, query, { kind, value }) }));
+      const statusOpts = facets("status", STATUSES, query.statuses);
+      const tagOpts = facets("tag", TAGS, query.tags);
+      const noteOpts: Option[] = typed
+        ? entries.filter((e) => matches(e, query)).slice(0, 5).map((entry) => ({ type: "note", entry }))
+        : [];
+      options = [...statusOpts.filter((o) => o.count > 0), ...tagOpts.filter((o) => o.count > 0), ...noteOpts];
+      active = Math.min(active, Math.max(options.length - 1, 0));
+
+      const item = (o: Option) => {
+        const i = options.indexOf(o);
+        if (o.type === "note") {
+          return `<li class="search-option" role="option" id="search-o${i}" data-i="${i}" aria-selected="${i === active}"><span><i class="dot dot-${o.entry.status}"></i><span class="search-note">${esc(o.entry.title)}</span></span></li>`;
+        }
+        const dot = o.kind === "status" ? `<i class="dot dot-${o.value}"></i>` : "";
+        const attrs = o.count > 0 ? `id="search-o${i}" data-i="${i}" aria-selected="${i === active}"` : `aria-disabled="true"`;
+        return `<li class="search-option" role="option" ${attrs}><span>${dot}${o.value}</span><span class="n">${o.count}</span></li>`;
+      };
+      const group = (label: string, list: Option[], extra = "") =>
+        list.length
+          ? `<div class="search-group"><p class="search-label">${label}</p><ul class="search-options ${extra}">${list.map(item).join("")}</ul></div>`
+          : "";
+      const sorted = (list: (Option & { type: "facet" })[]) => [...list.filter((o) => o.count > 0), ...list.filter((o) => o.count === 0)];
+      panel.innerHTML =
+        group("Status", sorted(statusOpts)) + group("Tags", sorted(tagOpts)) + group("Notes", noteOpts, "search-notes") ||
+        `<p class="search-none">Nothing matches.</p>`;
+      panel.querySelectorAll<HTMLElement>(".search-option[data-i]").forEach((li) => {
+        li.addEventListener("mousemove", () => {
+          active = Number(li.dataset.i);
+          mark();
+        });
+        li.addEventListener("mousedown", (e) => {
+          e.preventDefault();
+          choose(Number(li.dataset.i));
+        });
+      });
+      input.setAttribute("aria-activedescendant", options.length ? `search-o${active}` : "");
+    }
+
+    function mark() {
+      panel.querySelectorAll<HTMLElement>(".search-option[data-i]").forEach((li) =>
+        li.setAttribute("aria-selected", String(Number(li.dataset.i) === active)),
+      );
+      input.setAttribute("aria-activedescendant", `search-o${active}`);
+      panel.querySelector(`#search-o${active}`)?.scrollIntoView({ block: "nearest" });
+    }
+
+    function choose(i: number) {
+      const o = options[i];
+      if (!o) return;
+      if (o.type === "note") {
+        location.href = o.entry.url;
+        return;
+      }
+      if (o.kind === "status") query.statuses = [...query.statuses, o.value];
+      else query.tags = [...query.tags, o.value];
+      query.text = "";
+      input.value = "";
+      active = 0;
+      update();
+      input.focus();
+    }
+
+    function update() {
+      renderChips();
+      let shown = 0;
+      for (const e of entries) {
+        const ok = matches(e, query);
+        e.el.hidden = !ok;
+        if (ok) shown++;
+      }
+      if (noMatch) noMatch.hidden = shown > 0;
+      const filtered = query.statuses.length + query.tags.length > 0 || query.text.trim() !== "";
+      countText.textContent = filtered
+        ? `Showing ${shown} of ${entries.length} notes`
+        : `${entries.length} notes, newest first`;
+      clear.hidden = !filtered;
+      history.replaceState(null, "", location.pathname + toSearch(query) + location.hash);
+      if (!panel.hidden) renderPanel();
+    }
+
+    const open = () => {
+      panel.hidden = false;
+      input.setAttribute("aria-expanded", "true");
+      active = 0;
+      renderPanel();
+    };
+    const close = () => {
+      panel.hidden = true;
+      input.setAttribute("aria-expanded", "false");
+      input.removeAttribute("aria-activedescendant");
+    };
+
+    box.addEventListener("click", () => input.focus());
+    input.addEventListener("focus", open);
+    input.addEventListener("blur", () => setTimeout(close, 120));
+    input.addEventListener("input", () => {
+      query.text = input.value;
+      active = 0;
+      if (panel.hidden) open();
+      update();
+    });
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        if (panel.hidden) open();
+        active = Math.min(active + 1, options.length - 1);
+        mark();
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        active = Math.max(active - 1, 0);
+        mark();
+      } else if (e.key === "Enter") {
+        e.preventDefault();
+        choose(active);
+      } else if (e.key === "Escape") {
+        close();
+      } else if (e.key === "Backspace" && input.value === "") {
+        const lastTag = query.tags.at(-1);
+        const lastStatus = query.statuses.at(-1);
+        if (lastTag) remove("tag", lastTag);
+        else if (lastStatus) remove("status", lastStatus);
+      }
+    });
+    clear.addEventListener("click", () => {
+      query = emptyQuery();
+      input.value = "";
+      update();
+    });
+    document.addEventListener("keydown", (e) => {
+      const target = e.target as HTMLElement;
+      if (e.key === "/" && !["INPUT", "TEXTAREA"].includes(target.tagName) && !target.isContentEditable) {
+        e.preventDefault();
+        input.focus();
+      }
+    });
+
+    update();
+  }
+</script>

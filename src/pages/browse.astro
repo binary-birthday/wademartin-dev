@@ -1,0 +1,32 @@
+---
+import Base from "../layouts/Base.astro";
+import NoteList from "../components/NoteList.astro";
+import { getNotes, tagUrl } from "../lib/notes";
+import { STATUSES } from "../statuses";
+import { TAGS } from "../tags";
+
+const notes = await getNotes();
+const tagCounts = TAGS.map((tag) => ({ tag, count: notes.filter((n) => n.data.tags.includes(tag)).length }));
+---
+
+<Base title="Browse" description="Notes grouped by status, and every tag with its count.">
+  <h1>Browse</h1>
+  <h2 class="label">Tags</h2>
+  <ul class="tag-index">
+    {tagCounts.map(({ tag, count }) => (
+      <li>
+        <a href={tagUrl(tag)}>{tag}</a>
+        <span>{count}</span>
+      </li>
+    ))}
+  </ul>
+  {STATUSES.map((status) => (
+    <section class="browse-group">
+      <h2 class="label">
+        <i class={`dot dot-${status}`}></i>
+        {status}
+      </h2>
+      <NoteList notes={notes.filter((n) => n.data.status === status)} />
+    </section>
+  ))}
+</Base>

@@ -78,6 +78,8 @@ Run `pnpm verify` before opening a PR.
 - Tags must come from `src/tags.ts`. To add a tag, add it there.
 - If you rename a note, add a redirect from the old URL in
   `public/_redirects`.
+- To show a file name above a code block, add `title` after the language:
+  ```` ```ts title="src/schema.ts" ````.
 
 ## Changing colours
 

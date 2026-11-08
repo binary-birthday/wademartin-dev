@@ -10,6 +10,7 @@ export const colors = {
   accent: "#F15BB5", // magenta: highlights, "exploring"
   accentInCode: "#F47CC4", // magenta mixed 20% toward white, so it passes AA on the code background
   onFill: "#13294B", // text on teal or pink fills
+  highlight: "#77407B", // magenta 45% over navy: highlighter mark behind text
 } as const;
 
 // Every foreground/background pair the site uses for text.
@@ -25,6 +26,9 @@ export const textPairs: [name: string, fg: string, bg: string][] = [
   ["text on settled badge", colors.onFill, colors.link],
   ["text on exploring badge", colors.onFill, colors.accent],
   ["text on outdated badge", colors.onFill, colors.muted],
+  ["text on highlighter mark", colors.text, colors.highlight],
+  ["text on magenta file tab", colors.onFill, colors.accent],
+  ["muted text in the search panel", colors.muted, colors.surface],
 ];
 
 // Shapes that must stand out from the page: WCAG 1.4.11 asks for 3:1.
@@ -46,6 +50,7 @@ export const themeCss = `:root {
   --link: ${colors.link};
   --accent: ${colors.accent};
   --on-fill: ${colors.onFill};
+  --highlight: ${colors.highlight};
   --astro-code-background: ${colors.surface};
   --astro-code-foreground: ${colors.text};
   --astro-code-token-keyword: ${colors.accentInCode};
