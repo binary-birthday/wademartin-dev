@@ -24,7 +24,14 @@ export const textPairs: [name: string, fg: string, bg: string][] = [
   ["magenta in code blocks", colors.accentInCode, colors.surface],
   ["text on settled badge", colors.onFill, colors.link],
   ["text on exploring badge", colors.onFill, colors.accent],
-  ["muted text on outdated badge", colors.muted, colors.surface],
+  ["text on outdated badge", colors.onFill, colors.muted],
+];
+
+// Shapes that must stand out from the page: WCAG 1.4.11 asks for 3:1.
+export const shapePairs: [name: string, fill: string, bg: string][] = [
+  ["settled badge", colors.link, colors.bg],
+  ["exploring badge", colors.accent, colors.bg],
+  ["outdated badge", colors.muted, colors.bg],
 ];
 
 // CSS custom properties for the site, including Shiki's css-variables theme
