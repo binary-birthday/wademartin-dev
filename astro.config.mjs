@@ -5,4 +5,8 @@ import { defineConfig } from "astro/config";
 export default defineConfig({
   site: "https://wademartin.dev",
   trailingSlash: "always",
+  markdown: {
+    // Code colours come from CSS variables set in src/theme.ts.
+    shikiConfig: { theme: "css-variables" },
+  },
 });

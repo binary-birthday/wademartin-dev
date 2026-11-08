@@ -1,0 +1,9 @@
+---
+interface Props {
+  status: "exploring" | "settled" | "outdated";
+}
+
+const { status } = Astro.props;
+---
+
+<span class={`badge badge-${status}`}>{status}</span>

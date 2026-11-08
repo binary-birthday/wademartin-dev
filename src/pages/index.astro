@@ -9,7 +9,7 @@ const notes = await getNotes();
 ---
 
 <Base title="wademartin.dev" description={description}>
-  <p>{description}</p>
-  <h1>Notes</h1>
+  <p class="intro">{description}</p>
+  <h1 class="label">Notes</h1>
   <NoteList notes={notes} />
 </Base>

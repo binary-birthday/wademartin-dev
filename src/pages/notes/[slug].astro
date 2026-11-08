@@ -1,6 +1,7 @@
 ---
 import { render } from "astro:content";
 import Base from "../../layouts/Base.astro";
+import StatusBadge from "../../components/StatusBadge.astro";
 import { formatDate, getNotes, noteUrl, tagUrl, type Note } from "../../lib/notes";
 
 export async function getStaticPaths() {
@@ -19,16 +20,16 @@ const { Content } = await render(note);
 
 <Base title={title} description={summary} type="article">
   <article>
-    <h1>{title}</h1>
-    <p class="meta">
-      Published <time datetime={date.toISOString()}>{formatDate(date)}</time>
-      {updated && (
-        <>
-          {" · "}Updated <time datetime={updated.toISOString()}>{formatDate(updated)}</time>
-        </>
-      )}
-      {" · "}Status: {status}
-    </p>
+    <header class="note-header">
+      <h1>{title}</h1>
+      <div class="meta">
+        <span>Published <time datetime={date.toISOString()}>{formatDate(date)}</time></span>
+        {updated && (
+          <span>Updated <time datetime={updated.toISOString()}>{formatDate(updated)}</time></span>
+        )}
+        <StatusBadge status={status} />
+      </div>
+    </header>
     {status === "outdated" && (
       <p class="banner">
         This note is outdated.
@@ -40,26 +41,25 @@ const { Content } = await render(note);
       </p>
     )}
     <Content />
-    {links && links.length > 0 && (
-      <>
-        <h2>Links</h2>
-        <ul>
-          {links.map((link) => (
-            <li>
-              <a href={link}>{link}</a>
-            </li>
-          ))}
-        </ul>
-      </>
-    )}
-    <p class="meta">
-      Tags:{" "}
-      {tags.map((tag, i) => (
+    <footer class="note-footer">
+      {links && links.length > 0 && (
         <>
-          {i > 0 && ", "}
-          <a href={tagUrl(tag)}>{tag}</a>
+          <p class="label">Links</p>
+          <ul>
+            {links.map((link) => (
+              <li>
+                <a href={link}>{link}</a>
+              </li>
+            ))}
+          </ul>
         </>
-      ))}
-    </p>
+      )}
+      <div class="meta">
+        <span>Tags:</span>
+        {tags.map((tag) => (
+          <a href={tagUrl(tag)}>{tag}</a>
+        ))}
+      </div>
+    </footer>
   </article>
 </Base>

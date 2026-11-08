@@ -1,79 +1,278 @@
+/* Colours come from src/theme.ts, injected as custom properties in Base.astro. */
+@import "@fontsource-variable/bricolage-grotesque/opsz.css";
+@import "@fontsource-variable/newsreader/opsz.css";
+@import "@fontsource-variable/newsreader/opsz-italic.css";
+@import "@fontsource-variable/jetbrains-mono/wght.css";
+
 :root {
-  color-scheme: light dark;
-  --text: #1a1a1a;
-  --muted: #595959;
-  --bg: #ffffff;
-  --link: #0645ad;
-  --banner: #fff4e5;
+  --font-display: "Bricolage Grotesque Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-body: "Newsreader Variable", Georgia, "Times New Roman", serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --measure: 40rem;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #e6e6e6;
-    --muted: #a6a6a6;
-    --bg: #121212;
-    --link: #8ab4f8;
-    --banner: #3a2a12;
-  }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--bg);
 }
 
 body {
   margin: 0 auto;
-  max-width: 42rem;
-  padding: 1.5rem 1rem 4rem;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  line-height: 1.6;
+  max-width: calc(var(--measure) + 2rem);
+  padding: 2rem 1rem 5rem;
+  font-family: var(--font-body);
+  font-size: 1.15rem;
+  line-height: 1.7;
   color: var(--text);
   background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--on-fill);
 }
 
 a {
   color: var(--link);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
 }
 
-header {
+a:hover {
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 2px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+  font-weight: 650;
+}
+
+h1 {
+  font-size: 2.1rem;
+  margin: 0 0 0.6rem;
+}
+
+h2 {
+  font-size: 1.45rem;
+  margin: 2.2rem 0 0.6rem;
+}
+
+h3 {
+  font-size: 1.2rem;
+  margin: 1.8rem 0 0.5rem;
+}
+
+p,
+ul,
+ol {
+  margin: 0 0 1.1rem;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--rule);
+  margin: 2rem 0;
+}
+
+blockquote {
+  margin: 1.5rem 0;
+  padding-left: 1rem;
+  border-left: 3px solid var(--rule);
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* Site header */
+.site-header {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  margin-bottom: 2rem;
-}
-
-header nav a {
-  margin-left: 1rem;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  margin-bottom: 3rem;
 }
 
 .site-name {
-  font-weight: 600;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--text);
   text-decoration: none;
 }
 
-.meta {
+.site-name span {
+  color: var(--accent);
+}
+
+.site-nav {
+  display: flex;
+  gap: 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+
+/* Labels and metadata */
+.label {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
   color: var(--muted);
-  font-size: 0.9rem;
+  margin: 0 0 1rem;
 }
 
-.banner {
-  background: var(--banner);
-  padding: 0.75rem 1rem;
-  border-radius: 4px;
+.intro {
+  color: var(--muted);
+  margin-bottom: 2.5rem;
 }
 
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.meta a {
+  color: var(--muted);
+}
+
+.meta a:hover {
+  color: var(--link);
+}
+
+/* Status badges */
+.badge {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 0.05rem 0.55rem;
+  border-radius: 999px;
+}
+
+.badge-exploring {
+  background: var(--accent);
+  color: var(--on-fill);
+}
+
+.badge-settled {
+  background: var(--link);
+  color: var(--on-fill);
+}
+
+.badge-outdated {
+  background: var(--surface);
+  color: var(--muted);
+  border: 1px solid var(--rule);
+}
+
+/* Note list */
 .note-list {
   list-style: none;
   padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 1.75rem;
 }
 
-.note-list li {
-  margin-bottom: 1.25rem;
+.note-list h2 {
+  font-size: 1.25rem;
+  margin: 0 0 0.35rem;
 }
 
+.note-list h2 a {
+  color: var(--text);
+  text-decoration: none;
+}
+
+.note-list h2 a:hover {
+  color: var(--link);
+}
+
+.note-list p {
+  margin: 0.35rem 0 0;
+  color: var(--muted);
+}
+
+/* Note page */
+.note-header {
+  margin-bottom: 2rem;
+}
+
+.banner {
+  background: var(--surface);
+  border-left: 3px solid var(--accent);
+  border-radius: 4px;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  margin-bottom: 2rem;
+}
+
+.note-footer {
+  margin-top: 3rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--rule);
+}
+
+/* Code */
+code,
 pre {
-  overflow-x: auto;
-  padding: 1rem;
+  font-family: var(--font-mono);
+}
+
+:not(pre) > code {
+  font-size: 0.85em;
+  background: var(--surface);
+  padding: 0.1em 0.35em;
   border-radius: 4px;
 }
 
-code {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  font-size: 0.9em;
+pre {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  padding: 1rem 1.25rem;
+  border-radius: 6px;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+  background: var(--surface);
+}
+
+@media (max-width: 30rem) {
+  body {
+    font-size: 1.05rem;
+  }
+
+  h1 {
+    font-size: 1.75rem;
+  }
+
+  pre {
+    margin-inline: -1rem;
+    border-radius: 0;
+  }
 }

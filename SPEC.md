@@ -82,6 +82,15 @@ Initial list: `devops`, `dx`, `webdev`, `ai`, `agents`, `spec-driven`.
 | About | Who I am, in a few lines. |
 | Feed | RSS of all notes. |
 
+### Look
+
+- Dark theme only. The site ignores the visitor's light or dark setting.
+- Colours: navy background, teal for links and `settled`, hot pink for
+  highlights and `exploring`. Exact values live in `src/theme.ts`.
+- Fonts: Bricolage Grotesque for headings, Newsreader for body text,
+  JetBrains Mono for code and metadata. Font files are served from the site
+  itself, not a third-party font service.
+
 ## 7. URLs
 
 - Notes live at `/notes/<slug>/`. No date in the URL.
@@ -109,6 +118,8 @@ Initial list: `devops`, `dx`, `webdev`, `ai`, `agents`, `spec-driven`.
 ### Quality
 - Lighthouse ≥ 95 in every category on Home and a typical note.
 - Accessible to WCAG 2.2 AA.
+- Every text colour pair in `src/theme.ts` has a contrast ratio of at least
+  4.5:1. A unit test checks this.
 - No broken internal or external links.
 - Every merge to `main` deploys automatically.
 - Every PR gets a preview build.

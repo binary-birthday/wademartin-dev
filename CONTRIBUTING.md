@@ -79,6 +79,11 @@ Run `pnpm verify` before opening a PR.
 - If you rename a note, add a redirect from the old URL in
   `public/_redirects`.
 
+## Changing colours
+
+Colours live in `src/theme.ts`. If you add a new text colour pair, add it to
+`textPairs` there so the contrast test covers it.
+
 ## How the site is built and deployed
 
 GitHub Actions checks and builds the site once, then deploys that exact build
