@@ -1,0 +1,6 @@
+# Netlify only hosts the site. GitHub Actions builds, checks and deploys it
+# (see .github/workflows/ci.yml), so Netlify's own builds are switched off:
+# an ignore command that exits 0 cancels every Netlify build.
+[build]
+  publish = "dist"
+  ignore = "exit 0"

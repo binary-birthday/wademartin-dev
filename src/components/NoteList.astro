@@ -1,0 +1,45 @@
+---
+import StatusBadge from "./StatusBadge.astro";
+import { formatDate, noteUrl, tagUrl, type Note } from "../lib/notes";
+
+interface Props {
+  notes: Note[];
+}
+
+const { notes } = Astro.props;
+---
+
+{notes.length === 0 ? (
+  <p class="empty">No notes yet.</p>
+) : (
+  <>
+    <ul class="log">
+      {notes.map((note) => (
+        <li
+          class={`entry entry-${note.data.status}`}
+          data-title={note.data.title}
+          data-summary={note.data.summary}
+          data-status={note.data.status}
+          data-tags={note.data.tags.join(" ")}
+          data-url={noteUrl(note.id)}
+        >
+          <span class="entry-bar" aria-hidden="true"></span>
+          <time class="entry-date" datetime={note.data.date.toISOString()}>{formatDate(note.data.date)}</time>
+          <div class="entry-body">
+            <h2 class="entry-title">
+              <a href={noteUrl(note.id)}>{note.data.title}</a>
+            </h2>
+            <p class="entry-summary">{note.data.summary}</p>
+            <div class="meta">
+              <StatusBadge status={note.data.status} />
+              {note.data.tags.map((tag) => (
+                <a href={tagUrl(tag)}>{tag}</a>
+              ))}
+            </div>
+          </div>
+        </li>
+      ))}
+    </ul>
+    <p class="empty" data-no-match hidden>No notes match.</p>
+  </>
+)}

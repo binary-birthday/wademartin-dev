@@ -7,7 +7,8 @@ Status: draft. Items marked _(open)_ are not decided yet.
 
 Domain: `wademartin.dev`.
 
-Stack: Astro with TypeScript, using pnpm. Hosted on Netlify.
+Stack: Astro with TypeScript, using pnpm. Built and checked in GitHub
+Actions, hosted on Netlify.
 
 ## 1. Purpose
 
@@ -75,15 +76,51 @@ Initial list: `devops`, `dx`, `webdev`, `ai`, `agents`, `spec-driven`.
 
 | Page | Contents |
 |------|----------|
-| Home | One-line description and the latest notes. |
+| Home | One-line description, the search box (6.1) and all notes, newest first. |
 | Note | The note. Status and dates are easy to see. |
 | Tag | All notes with that tag. |
+| Browse | Notes grouped by status, and every tag with its count. Works without JavaScript. |
 | About | Who I am, in a few lines. |
 | Feed | RSS of all notes. |
 
+### Look
+
+- Dark theme only. The site ignores the visitor's light or dark setting.
+- Colours: navy background, teal for links and `settled`, magenta for
+  highlights and `exploring`. Exact values live in `src/theme.ts`.
+- Fonts: Bricolage Grotesque for headings, Newsreader for body text,
+  JetBrains Mono for code and metadata. Font files are served from the site
+  itself, not a third-party font service.
+- Layout: a lab notebook.
+  - A faint teal grid behind the page.
+  - In note lists, each note has a stripe down its left edge in its status
+    colour.
+  - On note pages, status, dates, tags and links sit in a margin beside the
+    text. On narrow screens they move above it.
+  - A code block can show its file name in a magenta tab
+    (```` ```ts title="src/schema.ts" ````).
+
+### 6.1 Search box
+
+- One search box on the home page, labelled "Search notes".
+- When opened, it lists every status and tag with the number of notes each
+  would leave. Choices that would leave none are shown greyed out.
+- Picking a status or tag adds it as a chip. Notes must match one of the
+  picked statuses and all of the picked tags.
+- Typed text filters notes by title, summary, tag and status. Matching notes
+  are listed in the suggestions; picking one goes to it.
+- The current filter is kept in the URL (`?status=…&tag=…&q=…`), so a
+  filtered view has its own link.
+- Works with a keyboard: `/` focuses the box, arrow keys move, Enter picks,
+  Backspace removes the last chip, Esc closes the suggestions.
+- Without JavaScript, the box is a link to the Browse page.
+
 ## 7. URLs
 
-- Notes live at `/notes/<slug>`. No date in the URL.
+- Notes live at `/notes/<slug>/`. No date in the URL.
+- Tag pages live at `/tags/<tag>/`.
+- The Browse page lives at `/browse/`.
+- The feed lives at `/rss.xml`.
 - A published URL never breaks. Renamed notes redirect from the old slug.
 
 ## 8. Acceptance criteria
@@ -106,6 +143,8 @@ Initial list: `devops`, `dx`, `webdev`, `ai`, `agents`, `spec-driven`.
 ### Quality
 - Lighthouse ≥ 95 in every category on Home and a typical note.
 - Accessible to WCAG 2.2 AA.
+- Every text colour pair in `src/theme.ts` has a contrast ratio of at least
+  4.5:1. A unit test checks this.
 - No broken internal or external links.
 - Every merge to `main` deploys automatically.
 - Every PR gets a preview build.
@@ -113,7 +152,7 @@ Initial list: `devops`, `dx`, `webdev`, `ai`, `agents`, `spec-driven`.
 ## 9. Non-goals
 
 - Other content types: case studies, series, a "now" page, a projects index.
-- Search, comments, featured or curated sections.
+- Comments, featured or curated sections.
 - A separate drafts area (`exploring` covers it).
 - CMS, backend, auth or contact forms.
 - Tracking cookies.

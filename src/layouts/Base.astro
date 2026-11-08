@@ -1,0 +1,49 @@
+---
+import "../styles/global.css";
+import { colors, themeCss } from "../theme";
+
+interface Props {
+  title: string;
+  description: string;
+  type?: "website" | "article";
+}
+
+const { title, description, type = "website" } = Astro.props;
+const siteName = "wademartin.dev";
+const fullTitle = title === siteName ? title : `${title} · ${siteName}`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content={colors.bg} />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" type="application/rss+xml" title={siteName} href="/rss.xml" />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary" />
+    <style is:inline set:html={themeCss}></style>
+  </head>
+  <body>
+    <header class="site-header">
+      <a href="/" class="site-name">wademartin<span>.</span>dev</a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="/browse/">browse</a>
+        <a href="/about/">about</a>
+        <a href="/rss.xml">rss</a>
+      </nav>
+    </header>
+    <main>
+      <slot />
+    </main>
+  </body>
+</html>
