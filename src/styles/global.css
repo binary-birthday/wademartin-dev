@@ -426,8 +426,9 @@ ol {
   color: var(--link);
 }
 
+/* Choices that would leave no notes: still readable, just quieter. */
 .search-option[aria-disabled="true"] {
-  color: var(--rule);
+  color: var(--muted);
   cursor: default;
 }
 
