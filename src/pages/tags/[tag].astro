@@ -21,6 +21,8 @@ const { notes } = Astro.props;
 ---
 
 <Base title={`Tag: ${tag}`} description={`Notes tagged ${tag}.`}>
-  <h1>Tag: {tag}</h1>
+  <p class="label">Tag</p>
+  <h1>{tag}</h1>
   <NoteList notes={notes} />
+  <p class="meta back"><a href="/browse/">All tags</a></p>
 </Base>

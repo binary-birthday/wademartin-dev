@@ -1,6 +1,7 @@
 ---
 import { render } from "astro:content";
 import Base from "../../layouts/Base.astro";
+import StatusBadge from "../../components/StatusBadge.astro";
 import { formatDate, getNotes, noteUrl, tagUrl, type Note } from "../../lib/notes";
 
 export async function getStaticPaths() {
@@ -15,51 +16,60 @@ interface Props {
 const { note } = Astro.props;
 const { title, summary, date, updated, status, tags, superseded_by, links } = note.data;
 const { Content } = await render(note);
+// Short link text for the margin: drop the scheme, "www." and "github.com/".
+const label = (url: string) =>
+  url.replace(/^https?:\/\/(www\.)?/, "").replace(/^github\.com\//, "").replace(/\/$/, "");
 ---
 
 <Base title={title} description={summary} type="article">
-  <article>
-    <h1>{title}</h1>
-    <p class="meta">
-      Published <time datetime={date.toISOString()}>{formatDate(date)}</time>
+  <article class="note">
+    <h1 class="note-title">{title}</h1>
+    <dl class="note-margin">
+      <div>
+        <dt>Status</dt>
+        <dd><StatusBadge status={status} /></dd>
+      </div>
+      <div>
+        <dt>Published</dt>
+        <dd><time datetime={date.toISOString()}>{formatDate(date)}</time></dd>
+      </div>
       {updated && (
-        <>
-          {" · "}Updated <time datetime={updated.toISOString()}>{formatDate(updated)}</time>
-        </>
+        <div>
+          <dt>Updated</dt>
+          <dd><time datetime={updated.toISOString()}>{formatDate(updated)}</time></dd>
+        </div>
       )}
-      {" · "}Status: {status}
-    </p>
-    {status === "outdated" && (
-      <p class="banner">
-        This note is outdated.
-        {superseded_by && (
-          <>
-            {" "}See <a href={noteUrl(superseded_by.id)}>the newer note</a>.
-          </>
-        )}
-      </p>
-    )}
-    <Content />
-    {links && links.length > 0 && (
-      <>
-        <h2>Links</h2>
-        <ul>
-          {links.map((link) => (
-            <li>
-              <a href={link}>{link}</a>
-            </li>
+      <div>
+        <dt>Tags</dt>
+        <dd class="note-tags">
+          {tags.map((tag) => (
+            <a href={tagUrl(tag)}>{tag}</a>
           ))}
-        </ul>
-      </>
-    )}
-    <p class="meta">
-      Tags:{" "}
-      {tags.map((tag, i) => (
-        <>
-          {i > 0 && ", "}
-          <a href={tagUrl(tag)}>{tag}</a>
-        </>
-      ))}
-    </p>
+        </dd>
+      </div>
+      {links && links.length > 0 && (
+        <div>
+          <dt>Links</dt>
+          <dd class="note-links">
+            {links.map((link) => (
+              <a href={link}>{label(link)}</a>
+            ))}
+          </dd>
+        </div>
+      )}
+    </dl>
+    <div class="note-body prose">
+      {status === "outdated" && (
+        <p class="banner">
+          This note is outdated.
+          {superseded_by && (
+            <>
+              {" "}See <a href={noteUrl(superseded_by.id)}>the newer note</a>.
+            </>
+          )}
+        </p>
+      )}
+      <Content />
+    </div>
   </article>
 </Base>
