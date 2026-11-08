@@ -1,8 +1,6 @@
 import { z } from "astro/zod";
+import { STATUSES } from "./statuses";
 import { TAGS } from "./tags";
-
-// Allowed note statuses (SPEC.md 5.2).
-export const STATUSES = ["exploring", "settled", "outdated"] as const;
 
 // Frontmatter for a note (SPEC.md 5.1). Unknown fields are rejected so a
 // typo in a field name fails the build instead of being ignored.
